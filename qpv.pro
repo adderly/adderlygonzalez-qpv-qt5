@@ -1,6 +1,6 @@
 QT = core gui declarative svg
 
-#win32:RC_FILE = win_icon.rc
+win32:RC_FILE = win_icon.rc
 
 RESOURCES += \
     resources.qrc

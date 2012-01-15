@@ -27,6 +27,8 @@ public:
     Q_INVOKABLE void goUp();
     Q_INVOKABLE void changeSelected(FileInfo *fi);
     Q_INVOKABLE void copySelected(QString path);
+    Q_INVOKABLE void showSelected();
+    Q_INVOKABLE void deleteSelected();
 
     QString path() const;
     void setPath(QString path);
@@ -36,7 +38,7 @@ signals:
     void endUpdate();
     void pathChanged(QString arg);
     void dirChanged(QString dirName);
-    void copyProgressChanged(double value);
+    void progressChanged(double value);
 
 public slots:
 

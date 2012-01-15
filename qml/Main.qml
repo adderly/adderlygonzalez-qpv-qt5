@@ -35,7 +35,7 @@ Page {
 
         Component.onCompleted: explorerModel.changePath(settings.lastPath)
 
-        onCopyProgressChanged: {
+        onProgressChanged: {
             progressPanel.value = value;
         }
     }
@@ -45,6 +45,15 @@ Page {
         anchors.top: progressPanel.bottom
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
+    }
+
+    Progress {
+        id: progressPanel
+        anchors.top: toolBar.bottom
+        anchors.right: parent.right
+        anchors.left: parent.left
+        value: 0
+        visible: value > 0
     }
 
     Rectangle {
@@ -90,18 +99,18 @@ Page {
             ToolButtonMenu {
                 source: "image://icon/:images/selected.svg"
                 Component.onCompleted: {
-                    add("show", qsTr("Show"), false);
+                    add("show", qsTr("Show"), true);
                     add("copy", qsTr("Copy"), true);
                     add("archive", qsTr("Archive"), false);
                     add("edit", qsTr("Edit"), false);
-                    add("delete", qsTr("Delete"), false);
+                    add("delete", qsTr("Delete"), true);
                     add("fileslist", qsTr("List of files"), false);
                 }
 
                 onMenuClicked: {
                     switch (name) {
                     case "show": {
-                        console.debug("show")
+                        explorerModel.showSelected()
                     } break;
                     case "copy": {
                         if (window.lastCopyPath == "")
@@ -110,6 +119,11 @@ Page {
                         explorerModel.copySelected(window.lastCopyPath);
                         progressPanel.visible = true;
                     } break;
+                    case "delete": {
+                        explorerModel.deleteSelected()
+                        progressPanel.visible = true;
+                    } break;
+
                     }
                 }
             }
@@ -124,15 +138,6 @@ Page {
                 onClicked: grid.thumbSizeOut()
             }
         }
-    }
-
-    Progress {
-        id: progressPanel
-        anchors.top: toolBar.bottom
-        anchors.right: parent.right
-        anchors.left: parent.left
-        value: 0
-        visible: value > 0
     }
 
     onHeightChanged: image.maxHeight = height - viewBox.boxMargin * 2;

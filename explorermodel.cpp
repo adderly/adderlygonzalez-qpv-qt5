@@ -174,12 +174,46 @@ void ExplorerModel::copySelected(QString path)
     FileInfo *fi;
     int count = m_selectedCache.count();
     int copedCount = 0;
-    emit copyProgressChanged(0);
+    emit progressChanged(0);
     QHash<QString, FileInfo *>::iterator it;
     for (it = m_selectedCache.begin(); it != m_selectedCache.end(); ++it) {
         fi = it.value();
         QFile::copy(fi->info()->absoluteFilePath(), path + "\\" + fi->name());
         ++copedCount;
-        emit copyProgressChanged(copedCount * 100 / count);
+        emit progressChanged(copedCount * 100 / count);
     }
+}
+
+void ExplorerModel::deleteSelected()
+{
+    FileInfo *fi;
+    int count = m_selectedCache.count();
+    int deletedCount = 0;
+    emit progressChanged(0);
+    QHash<QString, FileInfo *>::iterator it;
+    for (it = m_selectedCache.begin(); it != m_selectedCache.end(); ++it) {
+        fi = it.value();
+        QFile::remove(fi->info()->absoluteFilePath());
+        ++deletedCount;
+        emit progressChanged(deletedCount * 100 / count);
+    }
+    qApp->processEvents();
+    m_selectedCache.clear();
+    clear();
+    changePath(m_dir.path());
+}
+
+void ExplorerModel::showSelected()
+{
+    emit beginUpdate();
+    beginResetModel();
+
+    clear(false);
+    QHash<QString, FileInfo *>::iterator it;
+    for (it = m_selectedCache.begin(); it != m_selectedCache.end(); ++it) {
+       m_filesList.append(it.value());
+    }
+
+    endResetModel();
+    emit endUpdate();
 }

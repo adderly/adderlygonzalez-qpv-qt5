@@ -7,5 +7,13 @@
         <file>images/zoom-in.svg</file>
         <file>images/zoom-out.svg</file>
         <file>images/selected.svg</file>
+        <file>qml/Components/ImageViewBox.qml</file>
+        <file>qml/Components/NavigationPanel.qml</file>
+        <file>qml/Components/Page.qml</file>
+        <file>qml/Components/Progress.qml</file>
+        <file>qml/Components/ThumbGrid.qml</file>
+        <file>qml/Components/ToolButton.qml</file>
+        <file>qml/Components/ToolButtonMenu.qml</file>
+        <file>qml/Components/ToolPanel.qml</file>
     </qresource>
 </RCC>
