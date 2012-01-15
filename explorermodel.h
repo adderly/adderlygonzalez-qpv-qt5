@@ -19,12 +19,14 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
 
     Q_INVOKABLE void update();
-    void clear();
+    void clear(bool notSelected = true);
 
     Q_INVOKABLE void drives();
     Q_INVOKABLE void changeDir(FileInfo *fileInfo);
     Q_INVOKABLE void changePath(QString path);
     Q_INVOKABLE void goUp();
+    Q_INVOKABLE void changeSelected(FileInfo *fi);
+    Q_INVOKABLE void copySelected(QString path);
 
     QString path() const;
     void setPath(QString path);
@@ -34,6 +36,7 @@ signals:
     void endUpdate();
     void pathChanged(QString arg);
     void dirChanged(QString dirName);
+    void copyProgressChanged(double value);
 
 public slots:
 
@@ -54,9 +57,10 @@ private:
     QList<QByteArray> m_suffixFilter;
     QList<FileInfo *> m_filesList;
 
+    QHash<QString, FileInfo *> m_selectedCache;
+
     QString m_compName;
     QString m_path;
-
     QString m_lastPath;
 };
 

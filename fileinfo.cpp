@@ -5,6 +5,7 @@ FileInfo::FileInfo(QFileInfo fileInfo, QObject *parent) :
 {
     m_fileInfo = fileInfo;
     m_isDrive = false;
+    m_selected = false;
 }
 
 QFileInfo *FileInfo::info()
@@ -44,4 +45,22 @@ bool FileInfo::isDir()
 void FileInfo::setIsDrive(bool arg)
 {
     m_isDrive = arg;
+}
+
+bool FileInfo::isDrive()
+{
+    return m_isDrive;
+}
+
+void FileInfo::setSelected(bool arg)
+{
+    if (m_selected != arg) {
+        m_selected = arg;
+        emit selectedChanged(arg);
+    }
+}
+
+bool FileInfo::selected() const
+{
+    return m_selected;
 }

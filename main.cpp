@@ -6,6 +6,7 @@
 #include "fileinfo.h"
 #include "imageprovider.h"
 #include "settings.h"
+#include "window.h"
 
 void registerTypes(const char *uri)
 {
@@ -40,12 +41,15 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     engine->rootContext()->setContextProperty("settings", Settings::instance());
     engine->rootContext()->setContextProperty("view", &view);
+    engine->rootContext()->setContextProperty("ext", new Window());
 
     view.setResizeMode(QDeclarativeView::SizeRootObjectToView);
+    view.setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     view.setMinimumSize(320, 480);
     view.setWindowIcon(QIcon(":/qpv.ico"));
-    view.setSource(QUrl("qrc:qml/Main.qml"));
-    view.showMaximized();
+    view.setSource(QUrl("qml/Main.qml"));
+    //view.showMaximized();
+    view.show();
 
     return app.exec();
 }

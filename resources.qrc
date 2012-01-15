@@ -2,12 +2,10 @@
     <qresource prefix="/">
         <file>qml/Fn.js</file>
         <file>qml/Main.qml</file>
-        <file>qml/PathNav.qml</file>
-        <file>qml/ToolButton.qml</file>
         <file>images/folder.svg</file>
         <file>images/harddisk.svg</file>
         <file>images/zoom-in.svg</file>
         <file>images/zoom-out.svg</file>
-        <file>qpv.ico</file>
+        <file>images/selected.svg</file>
     </qresource>
 </RCC>

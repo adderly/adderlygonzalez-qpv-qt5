@@ -1,4 +1,5 @@
 #include "explorermodel.h"
+#include <QFile>
 
 ExplorerModel::ExplorerModel(QObject *parent) :
     QAbstractListModel(parent)
@@ -56,7 +57,7 @@ void ExplorerModel::update()
     emit beginUpdate();
     beginResetModel();
 
-    clear();
+    clear(false);
 
     QFileInfo fileInfo;
     QFileInfoList list;
@@ -76,7 +77,14 @@ void ExplorerModel::update()
         fileInfo = list.at(i);
         if (fileInfo.isDir() || m_suffixFilter.contains(fileInfo.suffix().toLower().toAscii())) {
             if (fileInfo.fileName() != "." && fileInfo.fileName() != "..") {
-                FileInfo *fi = new FileInfo(fileInfo);
+                FileInfo *fi;
+                QString filePath = fileInfo.absoluteFilePath();
+                if (m_selectedCache.contains(filePath)) {
+                    fi = m_selectedCache.value(filePath);
+                } else {
+                    fi = new FileInfo(fileInfo);
+                }
+
                 fi->setIsDrive(m_mode == Drivers);
                 m_filesList.append(fi);
             }
@@ -87,10 +95,13 @@ void ExplorerModel::update()
     emit endUpdate();
 }
 
-void ExplorerModel::clear()
+void ExplorerModel::clear(bool notSelected)
 {
+    FileInfo *fi;
     for (int i = 0; i < m_filesList.count(); ++i) {
-        delete m_filesList.at(i);
+        fi = m_filesList.at(i);
+        if (!notSelected && !fi->selected())
+            delete fi;
     }
 
     m_filesList.clear();
@@ -143,4 +154,32 @@ void ExplorerModel::setPath(QString path)
 QString ExplorerModel::path() const
 {
     return m_path;
+}
+
+void ExplorerModel::changeSelected(FileInfo *fi)
+{
+    if (!fi->isDir()) {
+        if (!fi->selected()) {
+            fi->setSelected(true);
+            m_selectedCache.insert(fi->info()->absoluteFilePath(), fi);
+        } else {
+            fi->setSelected(false);
+            m_selectedCache.remove(fi->info()->absoluteFilePath());
+        }
+    }
+}
+
+void ExplorerModel::copySelected(QString path)
+{
+    FileInfo *fi;
+    int count = m_selectedCache.count();
+    int copedCount = 0;
+    emit copyProgressChanged(0);
+    QHash<QString, FileInfo *>::iterator it;
+    for (it = m_selectedCache.begin(); it != m_selectedCache.end(); ++it) {
+        fi = it.value();
+        QFile::copy(fi->info()->absoluteFilePath(), path + "\\" + fi->name());
+        ++copedCount;
+        emit copyProgressChanged(copedCount * 100 / count);
+    }
 }
