@@ -23,7 +23,7 @@ public:
 
     Q_INVOKABLE void drives();
     Q_INVOKABLE void changeDir(FileInfo *fileInfo);
-    Q_INVOKABLE void changePath(QString path);
+    Q_INVOKABLE bool changePath(QString path);
     Q_INVOKABLE void goUp();
     Q_INVOKABLE void changeSelected(FileInfo *fi);
     Q_INVOKABLE void copySelected(QString path);

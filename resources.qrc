@@ -16,5 +16,7 @@
         <file>qml/Components/ToolButtonMenu.qml</file>
         <file>qml/Components/ToolPanel.qml</file>
         <file>qml/Components/Scroll.qml</file>
+        <file>images/computer.svg</file>
+        <file>images/go-up.svg</file>
     </qresource>
 </RCC>

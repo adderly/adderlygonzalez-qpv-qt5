@@ -110,4 +110,5 @@ Item {
     Scroll {
         view: gridView
     }
+
 }

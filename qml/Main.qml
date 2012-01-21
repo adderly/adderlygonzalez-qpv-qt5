@@ -7,9 +7,6 @@ Page {
 
     id: main
 
-    property string appName: "qpv"
-    property string compName: qsTr("Computer")
-
     property Item selectedActionDialog: null
     property string lastCopyPath: ""
 
@@ -65,7 +62,6 @@ Page {
             anchors.left: parent.left
             anchors.right: buttonLayout.left
             anchors.margins: 8
-            compName: main.compName
             path: explorerModel.path
             onChangePath: explorerModel.changePath(path);
 

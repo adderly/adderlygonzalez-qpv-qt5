@@ -122,14 +122,23 @@ void ExplorerModel::changeDir(FileInfo *fileInfo)
     }
 }
 
-void ExplorerModel::changePath(QString path)
+bool ExplorerModel::changePath(QString path)
 {
-    if (!path.isEmpty()) {
-        m_dir.setPath(path);
-        update();
-    } else {
+    bool result;
+    if (path.isEmpty()) {
         drives();
+        result = true;
+    } else {
+        if (m_dir.exists(path)) {
+            m_dir.setPath(path);
+            update();
+            result = true;
+        } else {
+            result = false;
+        }
     }
+
+    return result;
 }
 
 void ExplorerModel::goUp()
@@ -211,7 +220,7 @@ void ExplorerModel::showSelected()
     clear(false);
     QHash<QString, FileInfo *>::iterator it;
     for (it = m_selectedCache.begin(); it != m_selectedCache.end(); ++it) {
-       m_filesList.append(it.value());
+        m_filesList.append(it.value());
     }
 
     endResetModel();
