@@ -21,7 +21,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QCoreApplication::setOrganizationName("Quick Photo Viewer");
-    //QCoreApplication::setOrganizationDomain("igor.korsukov@gmail.com");
+    QCoreApplication::setOrganizationDomain("http://code.google.com/p/quick-photo-viewer/");
     //QCoreApplication::setApplicationName("Quick Photo Viewer");
 
     registerTypes("Extensions");
@@ -40,8 +40,9 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     engine->rootContext()->setContextProperty("icon", icon);
 
     engine->rootContext()->setContextProperty("settings", Settings::instance());
-    engine->rootContext()->setContextProperty("view", &view);
-    engine->rootContext()->setContextProperty("ext", new Window());
+    Window *window = new Window();
+    window->setView(&view);
+    engine->rootContext()->setContextProperty("window", window);
 
     view.setResizeMode(QDeclarativeView::SizeRootObjectToView);
     view.setViewportUpdateMode(QGraphicsView::FullViewportUpdate);

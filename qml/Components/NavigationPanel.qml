@@ -65,12 +65,19 @@ Item {
         id: pathButton
         Item {
             id: item
+
+            property int maxWidth: 80
+            property int minWidth: 30
+
             property int margin: 2
             property int textMargin: 4
 
             anchors.top: parent ? parent.top : undefined
             anchors.bottom: parent ? parent.bottom : undefined
-            width: Math.min(textHelper.paintedWidth, 60) + margin * 2 + textMargin * 2
+            width: {
+                var w = Math.min(textHelper.paintedWidth, maxWidth) + margin * 2 + textMargin * 2
+                return Math.max(w, minWidth)
+            }
 
             Rectangle {
                 anchors.fill: parent

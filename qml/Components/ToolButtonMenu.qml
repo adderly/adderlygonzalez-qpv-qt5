@@ -17,8 +17,8 @@ ToolButton {
 
     MouseArea {
         id: holder
-        width: window.width
-        height: window.height
+        width: main.width
+        height: main.height
         x: 0
         y: menubox.y
         hoverEnabled: true
@@ -50,7 +50,7 @@ ToolButton {
         function adjustX() {
             if (visible) {
                 var defX = menubox.width / 2 * -1;
-                var minX = mapFromItem(null, window.width - menubox.width - 10, y).x;
+                var minX = mapFromItem(null, main.width - menubox.width - 10, y).x;
                 menubox.x = Math.min(defX, minX);
             } else {
                 menubox.x = 0

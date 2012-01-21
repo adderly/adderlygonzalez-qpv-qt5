@@ -12,7 +12,7 @@ Item {
     function thumbSizeIn() {
         if (gridView.thumbSize <= 360) {
             gridView.thumbSize += 30
-            if (columns == 0) gridView.thumbSize -= 30
+            if (gridView.columns == 0) gridView.thumbSize -= 30
             explorerModel.update();
         }
     }
@@ -30,7 +30,7 @@ Item {
         property int thumbSize: settings.thumbSize
         property int cellMargin: 60
 
-        property int columns: Math.max(Math.floor(window.width / gridView.cellWidth), 1)
+        property int columns: Math.max(Math.floor(gridBox.parent.width / gridView.cellWidth), 1)
 
         onThumbSizeChanged: {
             thumb.size = gridView.thumbSize;

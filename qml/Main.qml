@@ -5,7 +5,7 @@ import "Fn.js" as Fn
 
 Page {
 
-    id: window
+    id: main
 
     property string appName: "qpv"
     property string compName: qsTr("Computer")
@@ -22,22 +22,19 @@ Page {
         }
 
         onDirChanged: {
-            var windowTitle = "";
+            var title = "";
             if (dirName != "")
-                windowTitle = dirName;
+                title = dirName;
             else if (explorerModel.path != "")
-                windowTitle = explorerModel.path
+                title = explorerModel.path
             else
-                windowTitle = window.compName;
+                title = main.compName;
 
-            view.windowTitle = windowTitle + " - " + window.appName;
+            window.title = title + " - " + window.appShortName;
         }
 
         Component.onCompleted: explorerModel.changePath(settings.lastPath)
-
-        onProgressChanged: {
-            progressPanel.value = value;
-        }
+        onProgressChanged: progressPanel.value = value;
     }
 
     ThumbGrid {
@@ -69,7 +66,7 @@ Page {
             anchors.left: parent.left
             anchors.right: buttonLayout.left
             anchors.margins: 8
-            compName: window.compName
+            compName: main.compName
             path: explorerModel.path
             onChangePath: explorerModel.changePath(path);
 
@@ -113,10 +110,10 @@ Page {
                         explorerModel.showSelected()
                     } break;
                     case "copy": {
-                        if (window.lastCopyPath == "")
-                            window.lastCopyPath = explorerModel.path
-                        window.lastCopyPath = ext.getExistingDirectory(window.lastCopyPath);
-                        explorerModel.copySelected(window.lastCopyPath);
+                        if (main.lastCopyPath == "")
+                            main.lastCopyPath = explorerModel.path
+                        main.lastCopyPath = window.getExistingDirectory(main.lastCopyPath);
+                        explorerModel.copySelected(main.lastCopyPath);
                         progressPanel.visible = true;
                     } break;
                     case "delete": {

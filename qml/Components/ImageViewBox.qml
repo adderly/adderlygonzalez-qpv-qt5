@@ -9,8 +9,8 @@ Rectangle {
     property int boxMargin: 10
     property int imageMargin: 5
 
-    property int maxHeight: window.height - boxMargin * 2
-    property int maxWidth: Math.max(mouseX, window.width - mouseX) - boxMargin
+    property int maxHeight: parent.height - boxMargin * 2
+    property int maxWidth: Math.max(mouseX, parent.width - mouseX) - boxMargin
 
     onMaxHeightChanged: adjustSize();
     onMaxWidthChanged: adjustSize();
@@ -33,7 +33,7 @@ Rectangle {
 
     function adjustY() {
         var vCenter = mouseY - height / 2;
-        y = Math.max(Math.min(vCenter, window.height - height - boxMargin), boxMargin)
+        y = Math.max(Math.min(vCenter, parent.height - height - boxMargin), boxMargin)
     }
 
     function adjustSize() {
