@@ -41,7 +41,6 @@ Page {
         id: grid
         anchors.top: progressPanel.bottom
         anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     Progress {

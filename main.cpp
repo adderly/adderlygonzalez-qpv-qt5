@@ -48,7 +48,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     view.setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     view.setMinimumSize(320, 480);
     view.setWindowIcon(QIcon(":/qpv.ico"));
-    view.setSource(QUrl("qrc:/qml/Main.qml"));
+    view.setSource(QUrl("qml/Main.qml"));
     view.showMaximized();
     //view.show();
 

@@ -1,12 +1,15 @@
 
 import QtQuick 1.1
+import "." 1.1
 
 Item {
     id: gridBox
 
     property alias view: gridView
 
-    width: gridView.cellWidth * gridView.columns
+    //width: gridView.cellWidth * gridView.columns
+    anchors.right: parent.right
+    anchors.left: parent.left
     clip: true
 
     function thumbSizeIn() {
@@ -102,5 +105,9 @@ Item {
                 }
             }
         }
+    }
+
+    Scroll {
+        view: gridView
     }
 }

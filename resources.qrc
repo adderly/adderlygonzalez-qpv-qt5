@@ -15,5 +15,6 @@
         <file>qml/Components/ToolButton.qml</file>
         <file>qml/Components/ToolButtonMenu.qml</file>
         <file>qml/Components/ToolPanel.qml</file>
+        <file>qml/Components/Scroll.qml</file>
     </qresource>
 </RCC>

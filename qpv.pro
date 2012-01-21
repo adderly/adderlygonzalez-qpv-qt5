@@ -32,7 +32,8 @@ OTHER_FILES += \
     qml/Components/ToolButtonMenu.qml \
     qml/Components/Progress.qml \
     qml/Components/ImageViewBox.qml \
-    qml/Components/ThumbGrid.qml
+    qml/Components/ThumbGrid.qml \
+    qml/Components/Scroll.qml
 
 
 
