@@ -1,6 +1,7 @@
 #include "window.h"
 #include <QFileDialog>
 #include <QDebug>
+#include <QDesktopServices>
 
 Window::Window(QObject *parent) :
     QObject(parent)
@@ -16,6 +17,11 @@ void Window::setView(QDeclarativeView *view)
 QString Window::getExistingDirectory(QString path)
 {
     return QFileDialog::getExistingDirectory(0, QString(), path);
+}
+
+void Window::openImage(FileInfo *fi)
+{
+    QDesktopServices::openUrl(QUrl::fromLocalFile(fi->source()));
 }
 
 QString Window::appShortName() const

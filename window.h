@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QtDeclarative>
+#include "fileinfo.h"
 
 class Window : public QObject
 {
@@ -14,6 +15,7 @@ public:
     explicit Window(QObject *parent = 0);
 
     Q_INVOKABLE QString getExistingDirectory(QString path = "");
+    Q_INVOKABLE void openImage(FileInfo *fi);
 
     void setView(QDeclarativeView *view);
 

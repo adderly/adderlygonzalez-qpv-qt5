@@ -83,16 +83,34 @@ Item {
                         property int deltaY: (row * gridView.cellHeight) + ((gridView.cellHeight - imageItem.height) / 2) - gridView.contentY + gridView.y
                         anchors.fill: parent
                         hoverEnabled: true
-                        onClicked: {
-                            if (fileInfo.isDir())
-                                explorerModel.changeDir(fileInfo);
-                            else
-                                explorerModel.changeSelected(fileInfo);//fileInfo.selected = !fileInfo.selected
-                        }
                         onEntered: viewBox.show(fileInfo);
                         onExited: viewBox.hide();
                         onMouseXChanged: viewBox.mouseX = deltaX + mouseX;
                         onMouseYChanged: viewBox.mouseY = deltaY + mouseY
+                        onClicked: {
+                            if (fileInfo.isDir()) {
+                                explorerModel.changeDir(fileInfo);
+                            } else {
+                                timer.lockclick = false;
+                                timer.start();
+                            }
+                        }
+                        onDoubleClicked: {
+                            timer.lockclick = true;
+                            window.openImage(fileInfo);
+                        }
+
+                        Timer { // HACK to separate onClick and onDoubleClick
+                            id: timer
+                            property bool lockclick: false
+                            interval: 400
+                            repeat: false
+                            onTriggered: {
+                                if (!lockclick) {
+                                    explorerModel.changeSelected(fileInfo);
+                                }
+                            }
+                        }
                     }
                 }
 
