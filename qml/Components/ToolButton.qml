@@ -6,8 +6,8 @@ Item {
     property string name: "unknown"
     property string source: ""
 
-    signal clicked
-    signal pressAndHold
+    signal clicked(variant mouse)
+    signal pressAndHold(variant mouse)
 
     height: parent.height
     width: height
@@ -21,7 +21,8 @@ Item {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: button.clicked()
-        onPressAndHold: button.pressAndHold()
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: button.clicked(mouse)
+        onPressAndHold: button.pressAndHold(mouses)
     }
 }

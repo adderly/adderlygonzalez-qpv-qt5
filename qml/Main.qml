@@ -89,6 +89,7 @@ Page {
             //            }
 
             ToolButtonMenu {
+                id: btnSelected
                 source: "image://icon/:images/selected.svg"
                 Component.onCompleted: {
                     add("show", qsTr("Show"), true);
@@ -97,12 +98,27 @@ Page {
                     add("edit", qsTr("Edit"), false);
                     add("delete", qsTr("Delete"), true);
                     add("fileslist", qsTr("List of files"), false);
+
+                    addcx("selall", qsTr("Select all"), true);
+                    addcx("deselall", qsTr("Deselect all"), true);
+                }
+
+                function resetImportant() {
+                    btnSelected.source = "image://icon/:images/selected.svg"
                 }
 
                 onMenuClicked: {
                     switch (name) {
+                    case "selall": {
+                        explorerModel.selectCurrent();
+                    } break;
+                    case "deselall": {
+                        explorerModel.deselectCurrent();
+                    } break;
                     case "show": {
                         explorerModel.showSelected()
+                        btnSelected.source = "image://icon/:images/important.svg"
+                        explorerModel.beginUpdate.connect(resetImportant)
                     } break;
                     case "copy": {
                         if (main.lastCopyPath == "")

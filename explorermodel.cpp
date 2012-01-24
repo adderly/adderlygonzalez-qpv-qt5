@@ -185,6 +185,30 @@ int ExplorerModel::selectedCount() const
     return m_selectedCache.count();
 }
 
+void ExplorerModel::selectCurrent()
+{
+    FileInfo *fi;
+    for (int i = 0; i < m_filesList.count(); ++i) {
+        fi = m_filesList.at(i);
+        if (!fi->isDir()) {
+            fi->setSelected(true);
+            m_selectedCache.insert(fi->info()->absoluteFilePath(), fi);
+        }
+    }
+}
+
+void ExplorerModel::deselectCurrent()
+{
+    FileInfo *fi;
+    for (int i = 0; i < m_filesList.count(); ++i) {
+        fi = m_filesList.at(i);
+        if (!fi->isDir()) {
+            fi->setSelected(false);
+            m_selectedCache.remove(fi->info()->absoluteFilePath());
+        }
+    }
+}
+
 void ExplorerModel::clearSelected()
 {
     FileInfo *fi;

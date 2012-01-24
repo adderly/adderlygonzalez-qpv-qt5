@@ -27,6 +27,8 @@ public:
     Q_INVOKABLE bool changePath(QString path);
     Q_INVOKABLE void goUp();
     Q_INVOKABLE void changeSelected(FileInfo *fi);
+    Q_INVOKABLE void selectCurrent();
+    Q_INVOKABLE void deselectCurrent();
     Q_INVOKABLE void clearSelected();
     Q_INVOKABLE void copySelected(QString path);
     Q_INVOKABLE void showSelected();

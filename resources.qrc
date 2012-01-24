@@ -18,5 +18,6 @@
         <file>qml/Components/Scroll.qml</file>
         <file>images/computer.svg</file>
         <file>images/go-up.svg</file>
+        <file>images/important.svg</file>
     </qresource>
 </RCC>

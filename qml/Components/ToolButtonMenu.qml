@@ -9,10 +9,25 @@ ToolButton {
 
     signal menuClicked(string name)
 
-    onClicked:  menubox.visible = !menubox.visible
+    onClicked: {
+        if (mouse.button == Qt.RightButton)
+            menuView.model = cxmenuModel
+        else
+            menuView.model = menuModel
+
+        menubox.visible = !menubox.visible
+    }
+    onPressAndHold: {
+        menuView.model = cxmenuModel
+        menubox.visible = false
+    }
 
     function add(name, title, enabled) {
         menuModel.append({ "name": name, "title": title, "enabled": enabled})
+    }
+
+    function addcx(name, title, enabled) {
+        cxmenuModel.append({ "name": name, "title": title, "enabled": enabled})
     }
 
     MouseArea {
@@ -34,10 +49,18 @@ ToolButton {
         }
     }
 
+    ListModel {
+        id: menuModel
+    }
+
+    ListModel {
+        id: cxmenuModel
+    }
+
     Rectangle {
         id: menubox
         width: 180
-        height: 240 // fixme
+        height: menuView.childrenRect.height
         y: tbmenu.y + tbmenu.height + 10
 
         border.color: "#666666"
@@ -57,50 +80,45 @@ ToolButton {
             }
         }
 
-        ListModel {
-            id: menuModel
-        }
-
         ListView {
             id: menuView
             anchors.fill: parent
             interactive: false
-            model: menuModel
             delegate: menuDelegate
         }
+    }
 
-        Component {
-            id: menuDelegate
+    Component {
+        id: menuDelegate
 
-            Item {
+        Item {
+            anchors.right: parent.right
+            anchors.left: parent.left
+            height: 40
+
+            Rectangle {
                 anchors.right: parent.right
                 anchors.left: parent.left
-                height: 40
+                height: 1
+                color: "#2e3436"
+                visible: model.index > 0
+            }
 
-                Rectangle {
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                    height: 1
-                    color: "#2e3436"
-                    visible: model.index > 0
-                }
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 20
+                smooth: true
+                text: model.title
+                font.pointSize: 14
+                color: model.enabled ? "#2e3436" : "#888a85"
+            }
 
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 20
-                    smooth: true
-                    text: model.title
-                    font.pointSize: 14
-                    color: model.enabled ? "#2e3436" : "#888a85"
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked:{
-                        menubox.visible = false
-                        tbmenu.menuClicked(model.name)
-                    }
+            MouseArea {
+                anchors.fill: parent
+                onClicked:{
+                    menubox.visible = false
+                    tbmenu.menuClicked(model.name)
                 }
             }
         }

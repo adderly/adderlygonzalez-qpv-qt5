@@ -56,6 +56,7 @@ Item {
             Column {
                 anchors.fill: parent
                 Rectangle {
+                    id: thumbBox
                     width: gridView.thumbSize + border.width
                     height: gridView.thumbSize + border.width
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -115,8 +116,8 @@ Item {
                 }
 
                 Text {
-                    anchors.right: parent.right
-                    anchors.left: parent.left
+                    anchors.right: thumbBox.right
+                    anchors.left: thumbBox.left
                     horizontalAlignment: Text.AlignHCenter
                     elide: Text.ElideMiddle
                     text: fileInfo.name
