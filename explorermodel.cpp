@@ -176,6 +176,26 @@ void ExplorerModel::changeSelected(FileInfo *fi)
             m_selectedCache.remove(fi->info()->absoluteFilePath());
         }
     }
+
+    emit selectedCountChanged(m_selectedCache.count());
+}
+
+int ExplorerModel::selectedCount() const
+{
+    return m_selectedCache.count();
+}
+
+void ExplorerModel::clearSelected()
+{
+    FileInfo *fi;
+    QHash<QString, FileInfo *>::iterator it;
+    for (it = m_selectedCache.begin(); it != m_selectedCache.end(); ++it) {
+        fi = it.value();
+        if (!m_filesList.contains(fi))
+            delete fi;
+        else
+            fi->setSelected(false);
+    }
 }
 
 void ExplorerModel::copySelected(QString path)

@@ -48,7 +48,7 @@ Item {
     }
 
     Rectangle {
-        id: button
+        id: btnComputer
 
         height: parent.height
         width: height
@@ -89,12 +89,31 @@ Item {
         id: view
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        anchors.left: button.right
+        anchors.left: btnComputer.right
+        anchors.leftMargin: 2
         anchors.right: parent.right
         orientation: ListView.Horizontal
         clip: true
+        spacing: 2
         model: pathModel
-        delegate: pathButton
+        delegate: Button {
+            id: btnPath
+            text: model.text
+            anchors.top: parent ? parent.top : undefined
+            anchors.bottom: parent ? parent.bottom : undefined
+            width: {
+                var w = Math.min(textHelper.paintedWidth, maxWidth) + textMargin * 2
+                return Math.max(w, minWidth)
+            }
+
+            Text {
+                id: textHelper
+                text: btnPath.text
+                visible: false
+            }
+
+            onClicked: root_pn.getNewPath(model.index);
+        }
     }
 
     Rectangle {
@@ -137,66 +156,5 @@ Item {
 
     function toggleInputPanel() {
         inputPanel.visible = !inputPanel.visible
-    }
-
-    Component {
-        id: pathButton
-        Item {
-            id: item
-
-            property int maxWidth: 80
-            property int minWidth: 30
-
-            property int margin: 2
-            property int textMargin: 4
-
-            anchors.top: parent ? parent.top : undefined
-            anchors.bottom: parent ? parent.bottom : undefined
-            width: {
-                var w = Math.min(textHelper.paintedWidth, maxWidth) + margin * 2 + textMargin * 2
-                return Math.max(w, minWidth)
-            }
-
-            Rectangle {
-                anchors.fill: parent
-                anchors.leftMargin: margin
-                anchors.rightMargin: margin
-                border.width: 1
-                border.color: "#999999"
-                radius: 4
-                smooth: true
-                gradient: Gradient {
-                    id: baclgrounGradient
-                    GradientStop { position: 0.0; color: "#EFEBE7" }
-                    GradientStop { position: 0.5; color: "#dFdBd7" }
-                    GradientStop { position: 1.0; color: "#EFEBE7" }
-                }
-
-                Item {
-                    anchors.fill: parent
-
-                    Text {
-                        id: text
-                        anchors.fill: parent
-                        anchors.margins: item.textMargin
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
-                        elide: Text.ElideRight
-                        text: model.text
-                    }
-                }
-
-                Text {
-                    id: textHelper
-                    text: text.text
-                    visible: false
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: root_pn.getNewPath(model.index);
-                }
-            }
-        }
     }
 }

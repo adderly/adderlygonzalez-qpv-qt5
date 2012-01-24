@@ -108,12 +108,16 @@ Page {
                         if (main.lastCopyPath == "")
                             main.lastCopyPath = explorerModel.path
                         main.lastCopyPath = window.getExistingDirectory(main.lastCopyPath);
-                        explorerModel.copySelected(main.lastCopyPath);
                         progressPanel.visible = true;
+                        explorerModel.copySelected(main.lastCopyPath);
+                        //explorerModel.clearSelected();
                     } break;
                     case "delete": {
-                        explorerModel.deleteSelected()
+                        explorerModel.showSelected()
                         progressPanel.visible = true;
+                        var dialog = createDialog("deleteConfirm", "MsgBox");
+                        dialog.text = qsTr("Are you sure you want to delete these %1 pictures?").arg(explorerModel.selectedCount)
+                        dialog.accepted.connect(explorerModel.deleteSelected)
                     } break;
 
                     }

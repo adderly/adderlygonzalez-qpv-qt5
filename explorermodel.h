@@ -10,6 +10,7 @@ class ExplorerModel : public QAbstractListModel
     Q_OBJECT
 
     Q_PROPERTY(QString path READ path NOTIFY pathChanged)
+    Q_PROPERTY(int selectedCount READ selectedCount NOTIFY selectedCountChanged)
 
 public:
     explicit ExplorerModel(QObject *parent = 0);
@@ -26,12 +27,14 @@ public:
     Q_INVOKABLE bool changePath(QString path);
     Q_INVOKABLE void goUp();
     Q_INVOKABLE void changeSelected(FileInfo *fi);
+    Q_INVOKABLE void clearSelected();
     Q_INVOKABLE void copySelected(QString path);
     Q_INVOKABLE void showSelected();
     Q_INVOKABLE void deleteSelected();
 
     QString path() const;
     void setPath(QString path);
+    int selectedCount() const;
 
 signals:
     void beginUpdate();
@@ -39,6 +42,7 @@ signals:
     void pathChanged(QString arg);
     void dirChanged(QString dirName);
     void progressChanged(double value);
+    void selectedCountChanged(int arg);
 
 public slots:
 

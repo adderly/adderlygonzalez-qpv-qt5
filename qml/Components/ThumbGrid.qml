@@ -103,7 +103,7 @@ Item {
                         Timer { // HACK to separate onClick and onDoubleClick
                             id: timer
                             property bool lockclick: false
-                            interval: 400
+                            interval: 200
                             repeat: false
                             onTriggered: {
                                 if (!lockclick) {

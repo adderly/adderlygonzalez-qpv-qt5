@@ -6,6 +6,12 @@ Item {
     property Item dialog: null
 
     function createDialog(name, source) {
+        switch (source) {
+        case "MsgBox": {
+            source = "MsgBox.qml"
+        } break;
+        }
+
         var component = Qt.createComponent(source)
 
         if (component.status === Component.Ready) {
